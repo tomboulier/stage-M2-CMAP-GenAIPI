@@ -1,0 +1,32 @@
+# Fichiers auxiliaires LaTeX
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.bbl
+*.blg
+*.nav
+*.snm
+*.vrb
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.synctex(busy)
+
+# Fichiers de sauvegarde
+*~
+*.bak
+*.backup
+
+# PDF généré (optionnel - décommenter si vous ne voulez pas versionner le PDF)
+# *.pdf
+
+# Répertoires de build
+build/
+_minted-*/
+
+# Fichiers système
+.DS_Store
+Thumbs.db

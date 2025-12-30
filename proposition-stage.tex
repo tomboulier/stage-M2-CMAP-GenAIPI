@@ -1,0 +1,95 @@
+\documentclass[11pt,a4paper]{article}
+
+% Encodage et langue
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+% Décommenter après 'make install' :
+% \usepackage[french]{babel}
+\usepackage{csquotes}
+
+% Mise en page
+\usepackage[margin=2.5cm]{geometry}
+
+% Typographie
+\usepackage{lmodern}
+
+% Liens
+\usepackage[colorlinks=true,linkcolor=blue!60!black,urlcolor=blue!60!black]{hyperref}
+
+% Couleurs
+\usepackage{xcolor}
+\definecolor{polytechnique}{RGB}{0,62,92}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\begin{center}
+    {\Large\bfseries\color{polytechnique} Proposition de Stage de Master 2}\\[0.3cm]
+    {\large CMAP -- École Polytechnique}\\[0.8cm]
+
+    {\LARGE\bfseries Apprentissage de modèles génératifs d'images\\[0.2cm]
+    médicales 3D avec peu de données}\\[1cm]
+\end{center}
+
+\noindent
+\begin{tabular}{@{}ll}
+    \textbf{Encadrants :} & Josselin Garnier (CMAP, École Polytechnique)\\
+                          & Thomas Boulier (CHU Grenoble Alpes)\\[0.2cm]
+    \textbf{Lieu :}       & CMAP, École Polytechnique, Palaiseau\\[0.2cm]
+    \textbf{Période :}    & Avril -- Septembre 2026 (6 mois)\\[0.2cm]
+    \textbf{Contact :}    & \href{mailto:josselin.garnier@polytechnique.edu}{josselin.garnier@polytechnique.edu},
+                            \href{mailto:tboulier@chu-grenoble.fr}{tboulier@chu-grenoble.fr}\\
+\end{tabular}
+
+\vspace{0.6cm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Contexte}
+
+Les modèles génératifs basés sur la diffusion permettent aujourd'hui de synthétiser des images médicales 3D réalistes, ouvrant des perspectives pour l'augmentation de données ou le partage de données synthétiques. Cependant, leur entraînement nécessite typiquement des dizaines de milliers d'exemples -- un volume rarement disponible en pratique clinique.
+
+Cette contrainte de données est renforcée par le \textbf{principe de minimisation} du RGPD (article 5), qui impose de limiter la collecte de données personnelles au strict nécessaire. En imagerie médicale, cela encourage le développement de méthodes efficaces avec peu de données plutôt que l'accumulation de larges corpus.
+
+Pour les tâches \emph{discriminatives} (classification, segmentation), le \textbf{transfer learning} a démontré son efficacité : des modèles pré-entraînés sur de grands datasets peuvent être adaptés à de nouvelles tâches avec peu d'exemples. Par exemple, BLAST-CT, un outil de segmentation de lésions cérébrales traumatiques, utilise le transfer learning pour s'adapter à de nouveaux sites cliniques avec seulement quelques dizaines de scans annotés.
+
+\textbf{La question se pose de savoir si cette approche fonctionne également pour les modèles génératifs.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Objectif du stage}
+
+Ce stage vise à évaluer si un modèle génératif pré-entraîné peut apprendre la distribution d'un jeu de données de scanners cérébraux avec un nombre limité d'exemples.
+
+Le modèle étudié sera \textbf{MAISI} (Medical AI for Synthetic Imaging), développé par NVIDIA et disponible en open source. MAISI est un modèle de diffusion latente capable de générer des images CT 3D haute résolution, pré-entraîné sur environ 39\,000 volumes.
+
+L'étude portera sur le \textbf{fine-tuning} de ce modèle sur le dataset \textbf{CQ-500} (491 scanners cérébraux, dont 205 avec hémorragies intracrâniennes), afin de mesurer la qualité de génération en fonction du nombre d'exemples d'entraînement.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Contexte applicatif}
+
+Ce stage s'inscrit dans le projet \textbf{GenAIPI-TBI} (Generative AI for Predictive Imaging in Traumatic Brain Injury), mené au CHU de Grenoble. Ce projet vise à développer des modèles capables de prédire l'évolution des lésions cérébrales chez les patients traumatisés crâniens à partir d'images CT.
+
+Le traumatisme crânien est la première cause de handicap chez les moins de 35 ans en Europe. Les données disponibles pour ce projet sont limitées à environ 700 patients et 1\,600 scanners -- un ordre de grandeur inférieur aux besoins typiques des modèles génératifs.
+
+Avant d'aborder la génération conditionnelle (prédiction temporelle), il est essentiel de valider la faisabilité de l'apprentissage de modèles génératifs sur ce type de données avec peu d'exemples.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Profil recherché}
+
+\begin{itemize}
+    \item Master 2 en mathématiques appliquées, informatique ou domaine connexe
+    \item Connaissances en apprentissage profond et modèles génératifs
+    \item Expérience avec PyTorch
+    \item Intérêt pour l'imagerie médicale
+\end{itemize}
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.3cm}
+{\small
+\textbf{Références :}
+MAISI -- \url{https://github.com/NVIDIA-Medtech/NV-Generate-CTMR/} ~|~
+CQ-500 -- \url{http://headctstudy.qure.ai/dataset} ~|~
+BLAST-CT -- \url{https://github.com/biomedia-mira/blast-ct}
+}
+
+\end{document}
