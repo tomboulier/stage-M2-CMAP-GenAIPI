@@ -49,22 +49,49 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Contexte et motivation}
 
-Ce stage s'inscrit dans le projet \textbf{GenAIPI-TBI} (Generative AI for Predictive Imaging in Traumatic Brain Injury), mené au CHU de Grenoble. L'objectif à long terme est de développer des modèles génératifs capables de \textbf{prédire l'évolution des lésions cérébrales} chez les patients traumatisés crâniens à partir d'images CT successives. Le traumatisme crânien est la première cause de handicap chez les moins de 35 ans en Europe~\cite{maas2017tbi}.
+Ce stage s'inscrit dans le projet \textbf{GenAIPI-TBI} (Generative AI for Predictive
+Imaging in Traumatic Brain Injury), mené au CHU de Grenoble. L'objectif à long terme
+est de développer des modèles génératifs capables de \textbf{prédire l'évolution des
+lésions cérébrales} chez les patients traumatisés crâniens à partir d'images CT
+successives. Le traumatisme crânien est la première cause de handicap chez les moins
+de 35 ans en Europe~\cite{maas2017tbi}.
 
-Un obstacle majeur est la \textbf{rareté des données} : le projet dispose d'environ 700 patients et 1\,600 scanners, soit un ordre de grandeur inférieur aux dizaines de milliers d'exemples typiquement requis par les modèles génératifs. Cette contrainte est renforcée par le \textbf{principe de minimisation} du RGPD (article 5)~\cite{rgpd2016}, qui impose de limiter la collecte de données personnelles au strict nécessaire.
+Un obstacle majeur est la \textbf{rareté des données} : le projet dispose d'environ
+700 patients et 1\,600 scanners, soit un ordre de grandeur inférieur aux dizaines de
+milliers d'exemples typiquement requis par les modèles génératifs. Cette contrainte
+est renforcée par le \textbf{principe de minimisation} du RGPD
+(article 5)~\cite{rgpd2016}, qui impose de limiter la collecte de données
+personnelles au strict nécessaire.
 
-\textbf{La question fondamentale est donc : peut-on entraîner des modèles génératifs de qualité avec peu de données ?}
+\textbf{La question fondamentale est donc : peut-on entraîner des modèles génératifs
+de qualité avec peu de données ?}
 
-Pour les tâches \emph{discriminatives} (classification, segmentation), le \textbf{transfer learning} a démontré son efficacité. Par exemple, BLAST-CT~\cite{monteiro2020blastct}, un outil de segmentation de lésions cérébrales traumatiques, a été adapté avec seulement 87 scans par Brossard et al.~\cite{brossard2023til} pour prédire l'intensité thérapeutique en réanimation. La question se pose de savoir si cette approche fonctionne également pour les \textbf{modèles génératifs de fondation}.
+Pour les tâches \emph{discriminatives} (classification, segmentation), le
+\textbf{transfer learning} a démontré son efficacité. Par exemple,
+BLAST-CT~\cite{monteiro2020blastct}, un outil de segmentation de lésions cérébrales
+traumatiques, a été adapté avec seulement 87 scans par Brossard et
+al.~\cite{brossard2023til} pour prédire l'intensité thérapeutique en réanimation.
+La question se pose de savoir si cette approche fonctionne également pour les
+\textbf{modèles génératifs de fondation}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Objectif du stage}
 
-Ce stage vise à évaluer si un modèle génératif pré-entraîné peut apprendre la distribution d'un jeu de données de scanners cérébraux avec un nombre limité d'exemples.
+Ce stage vise à évaluer si un modèle génératif pré-entraîné peut apprendre la
+distribution d'un jeu de données de scanners cérébraux avec un nombre limité
+d'exemples.
 
-Le modèle étudié sera \textbf{MAISI} (Medical AI for Synthetic Imaging)~\cite{guo2024maisi}, développé par NVIDIA. MAISI est un modèle de diffusion latente capable de générer des images CT 3D haute résolution (jusqu'à $512 \times 512 \times 768$ voxels), pré-entraîné sur environ 39\,000 volumes. Une version améliorée, MAISI-v2~\cite{zhao2025maisiv2}, propose une accélération d'un facteur 10 à 33 grâce au \emph{rectified flow}.
+Le modèle étudié sera \textbf{MAISI} (Medical AI for Synthetic
+Imaging)~\cite{guo2024maisi}, développé par NVIDIA. MAISI est un modèle de diffusion
+latente capable de générer des images CT 3D haute résolution (jusqu'à
+$512 \times 512 \times 768$ voxels), pré-entraîné sur environ 39\,000 volumes. Une
+version améliorée, MAISI-v2~\cite{zhao2025maisiv2}, propose une accélération d'un
+facteur 10 à 33 grâce au \emph{rectified flow}.
 
-L'étude portera sur le \textbf{fine-tuning} de ce modèle sur le dataset \textbf{CQ-500}~\cite{chilamkurthy2018cq500} (491 scanners cérébraux, dont 205 avec hémorragies intracrâniennes), afin de mesurer la qualité de génération en fonction du nombre d'exemples d'entraînement.
+L'étude portera sur le \textbf{fine-tuning} de ce modèle sur le dataset
+\textbf{CQ-500}~\cite{chilamkurthy2018cq500} (491 scanners cérébraux, dont 205 avec
+hémorragies intracrâniennes), afin de mesurer la qualité de génération en fonction
+du nombre d'exemples d'entraînement.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Profil recherché}
