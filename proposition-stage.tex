@@ -14,7 +14,10 @@
 \usepackage{lmodern}
 
 % Liens
-\usepackage[colorlinks=true,linkcolor=blue!60!black,urlcolor=blue!60!black]{hyperref}
+\usepackage[colorlinks=true,linkcolor=blue!60!black,citecolor=blue!60!black,urlcolor=blue!60!black]{hyperref}
+
+% Bibliographie
+\usepackage[numbers,sort&compress]{natbib}
 
 % Couleurs
 \usepackage{xcolor}
@@ -44,33 +47,24 @@
 \vspace{0.6cm}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section*{Contexte}
+\section*{Contexte et motivation}
 
-Les modèles génératifs basés sur la diffusion permettent aujourd'hui de synthétiser des images médicales 3D réalistes, ouvrant des perspectives pour l'augmentation de données ou le partage de données synthétiques. Cependant, leur entraînement nécessite typiquement des dizaines de milliers d'exemples -- un volume rarement disponible en pratique clinique.
+Ce stage s'inscrit dans le projet \textbf{GenAIPI-TBI} (Generative AI for Predictive Imaging in Traumatic Brain Injury), mené au CHU de Grenoble. L'objectif à long terme est de développer des modèles génératifs capables de \textbf{prédire l'évolution des lésions cérébrales} chez les patients traumatisés crâniens à partir d'images CT successives. Le traumatisme crânien est la première cause de handicap chez les moins de 35 ans en Europe~\cite{maas2017tbi}.
 
-Cette contrainte de données est renforcée par le \textbf{principe de minimisation} du RGPD (article 5), qui impose de limiter la collecte de données personnelles au strict nécessaire. En imagerie médicale, cela encourage le développement de méthodes efficaces avec peu de données plutôt que l'accumulation de larges corpus.
+Un obstacle majeur est la \textbf{rareté des données} : le projet dispose d'environ 700 patients et 1\,600 scanners, soit un ordre de grandeur inférieur aux dizaines de milliers d'exemples typiquement requis par les modèles génératifs. Cette contrainte est renforcée par le \textbf{principe de minimisation} du RGPD (article 5)~\cite{rgpd2016}, qui impose de limiter la collecte de données personnelles au strict nécessaire.
 
-Pour les tâches \emph{discriminatives} (classification, segmentation), le \textbf{transfer learning} a démontré son efficacité : des modèles pré-entraînés sur de grands datasets peuvent être adaptés à de nouvelles tâches avec peu d'exemples. Par exemple, BLAST-CT, un outil de segmentation de lésions cérébrales traumatiques, utilise le transfer learning pour s'adapter à de nouveaux sites cliniques avec seulement quelques dizaines de scans annotés.
+\textbf{La question fondamentale est donc : peut-on entraîner des modèles génératifs de qualité avec peu de données ?}
 
-\textbf{La question se pose de savoir si cette approche fonctionne également pour les modèles génératifs.}
+Pour les tâches \emph{discriminatives} (classification, segmentation), le \textbf{transfer learning} a démontré son efficacité. Par exemple, BLAST-CT~\cite{monteiro2020blastct}, un outil de segmentation de lésions cérébrales traumatiques, a été adapté avec seulement 87 scans par Brossard et al.~\cite{brossard2023til} pour prédire l'intensité thérapeutique en réanimation. La question se pose de savoir si cette approche fonctionne également pour les \textbf{modèles génératifs de fondation}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Objectif du stage}
 
 Ce stage vise à évaluer si un modèle génératif pré-entraîné peut apprendre la distribution d'un jeu de données de scanners cérébraux avec un nombre limité d'exemples.
 
-Le modèle étudié sera \textbf{MAISI} (Medical AI for Synthetic Imaging), développé par NVIDIA et disponible en open source. MAISI est un modèle de diffusion latente capable de générer des images CT 3D haute résolution, pré-entraîné sur environ 39\,000 volumes.
+Le modèle étudié sera \textbf{MAISI} (Medical AI for Synthetic Imaging)~\cite{guo2024maisi}, développé par NVIDIA. MAISI est un modèle de diffusion latente capable de générer des images CT 3D haute résolution (jusqu'à $512 \times 512 \times 768$ voxels), pré-entraîné sur environ 39\,000 volumes. Une version améliorée, MAISI-v2~\cite{zhao2025maisiv2}, propose une accélération d'un facteur 10 à 33 grâce au \emph{rectified flow}.
 
-L'étude portera sur le \textbf{fine-tuning} de ce modèle sur le dataset \textbf{CQ-500} (491 scanners cérébraux, dont 205 avec hémorragies intracrâniennes), afin de mesurer la qualité de génération en fonction du nombre d'exemples d'entraînement.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section*{Contexte applicatif}
-
-Ce stage s'inscrit dans le projet \textbf{GenAIPI-TBI} (Generative AI for Predictive Imaging in Traumatic Brain Injury), mené au CHU de Grenoble. Ce projet vise à développer des modèles capables de prédire l'évolution des lésions cérébrales chez les patients traumatisés crâniens à partir d'images CT.
-
-Le traumatisme crânien est la première cause de handicap chez les moins de 35 ans en Europe. Les données disponibles pour ce projet sont limitées à environ 700 patients et 1\,600 scanners -- un ordre de grandeur inférieur aux besoins typiques des modèles génératifs.
-
-Avant d'aborder la génération conditionnelle (prédiction temporelle), il est essentiel de valider la faisabilité de l'apprentissage de modèles génératifs sur ce type de données avec peu d'exemples.
+L'étude portera sur le \textbf{fine-tuning} de ce modèle sur le dataset \textbf{CQ-500}~\cite{chilamkurthy2018cq500} (491 scanners cérébraux, dont 205 avec hémorragies intracrâniennes), afin de mesurer la qualité de génération en fonction du nombre d'exemples d'entraînement.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Profil recherché}
@@ -82,14 +76,45 @@ Avant d'aborder la génération conditionnelle (prédiction temporelle), il est 
     \item Intérêt pour l'imagerie médicale
 \end{itemize}
 
-\vspace{0.5cm}
-\hrule
-\vspace{0.3cm}
-{\small
-\textbf{Références :}
-MAISI -- \url{https://github.com/NVIDIA-Medtech/NV-Generate-CTMR/} ~|~
-CQ-500 -- \url{http://headctstudy.qure.ai/dataset} ~|~
-BLAST-CT -- \url{https://github.com/biomedia-mira/blast-ct}
-}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\refname}{Références}
+\bibliographystyle{unsrtnat}
+\begin{thebibliography}{9}
+
+\bibitem{maas2017tbi}
+A.I.R. Maas et al.,
+\emph{Traumatic brain injury: integrated approaches to improve prevention, clinical care, and research},
+The Lancet Neurology, 16(12):987--1048, 2017.
+
+\bibitem{rgpd2016}
+Règlement (UE) 2016/679 du Parlement européen et du Conseil (RGPD), article 5 -- Principes relatifs au traitement des données à caractère personnel, 2016.
+
+\bibitem{monteiro2020blastct}
+M. Monteiro et al.,
+\emph{Multiclass semantic segmentation and quantification of traumatic brain injury lesions on head CT using deep learning},
+The Lancet Digital Health, 2(6):e314--e322, 2020.
+
+\bibitem{brossard2023til}
+C. Brossard et al.,
+\emph{Prediction of therapeutic intensity level from automatic multiclass segmentation of traumatic brain injury lesions on CT-scans},
+Scientific Reports, 13:19536, 2023.
+
+\bibitem{guo2024maisi}
+P. Guo et al.,
+\emph{MAISI: Medical AI for Synthetic Imaging},
+arXiv:2409.11169, 2024.
+
+\bibitem{zhao2025maisiv2}
+C. Zhao et al.,
+\emph{MAISI-v2: Accelerated 3D High-Resolution Medical Image Synthesis with Rectified Flow and Region-specific Contrastive Loss},
+arXiv:2508.05772, 2025.
+
+\bibitem{chilamkurthy2018cq500}
+S. Chilamkurthy et al.,
+\emph{Deep learning algorithms for detection of critical findings in head CT scans: a retrospective study},
+The Lancet, 392(10162):2388--2396, 2018.
+DOI: 10.1016/S0140-6736(18)31645-3.
+
+\end{thebibliography}
 
 \end{document}
