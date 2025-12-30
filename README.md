@@ -15,22 +15,19 @@ Ce dépôt contient la proposition de stage de Master 2 portant sur l'étude du 
 
 Avril - Septembre 2026 (6 mois)
 
-### Installation des dépendances
+### Utilisation
 
 ```bash
-# Installer les packages LaTeX nécessaires (Ubuntu/Debian)
-make install
-
-# Puis décommenter \usepackage[french]{babel} dans proposition-stage.tex
-```
-
-### Compilation
-
-```bash
-# Compiler le PDF
+# Afficher l'aide
 make
 
-# Ouvrir le PDF
+# Installer les dépendances LaTeX (Ubuntu/Debian)
+make install
+
+# Compiler le PDF
+make pdf
+
+# Compiler et ouvrir le PDF
 make view
 
 # Nettoyer les fichiers auxiliaires
