@@ -89,10 +89,14 @@ $512 \times 512 \times 768$ voxels), pré-entraîné sur environ 39\,000 volumes
 version améliorée, MAISI-v2~\cite{zhao2025maisiv2}, propose une accélération d'un
 facteur 10 à 33 grâce au \emph{rectified flow}.
 
-L'étude portera sur le \textbf{fine-tuning} de ce modèle sur le dataset
+L'étude s'appuiera sur le modèle MAISI et le dataset
 \textbf{CQ-500}~\cite{chilamkurthy2018cq500} (491 scanners cérébraux, dont 205 avec
-hémorragies intracrâniennes), afin de mesurer la qualité de génération en fonction
-du nombre d'exemples d'entraînement.
+hémorragies intracrâniennes) pour aborder la question suivante : \textbf{quel est le
+nombre minimal d'images d'entraînement nécessaire pour qu'un modèle génératif
+pré-entraîné produise, après adaptation, des images atteignant un seuil de qualité
+donné ?} Cette question, analogue au calcul du nombre de sujets nécessaires dans les
+études cliniques, n'a pas de réponse établie dans le contexte des modèles génératifs
+pour l'imagerie médicale.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Profil recherché}
@@ -100,7 +104,7 @@ du nombre d'exemples d'entraînement.
 \begin{itemize}
     \item Master 2 en mathématiques appliquées, informatique ou domaine connexe
     \item Connaissances en apprentissage profond et modèles génératifs
-    \item Compétences en programmation Python, expérience avec PyTorch et/ou TensorFlow
+    \item Compétences en programmation Python, Expérience avec PyTorch et/ou TensorFlow
     \item Intérêt pour l'imagerie médicale
 \end{itemize}
 
