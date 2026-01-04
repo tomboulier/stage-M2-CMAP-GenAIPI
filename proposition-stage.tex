@@ -76,6 +76,38 @@ La question se pose de savoir si cette approche fonctionne également pour les
 \textbf{modèles génératifs de fondation}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{État de l'art}
+
+Les modèles de diffusion ont récemment émergé comme une classe particulièrement
+performante de modèles génératifs, notamment en imagerie
+médicale~\cite{pinaya2022brain,wolleb2022anomaly,khan2025survey}, où ils
+permettent de capturer des distributions de données complexes à haute dimension
+malgré des volumes d'apprentissage limités. Plusieurs travaux ont montré que ces
+modèles pouvaient être adaptés à des régimes de données restreints, en
+particulier dans des contextes de \emph{few-shot learning} ou de transfert
+depuis un pré-entraînement à grande échelle. Cao et Gong~\cite{cao2024fewshot}
+proposent ainsi une méthode de génération d'images en few-shot reposant sur
+l'inversion conditionnelle de modèles de diffusion, permettant d'obtenir des
+résultats satisfaisants à partir d'un très petit nombre d'exemples cibles. De
+manière complémentaire, Hu et al.~\cite{hu2023phasic} introduisent une stratégie
+d'adaptation progressive de modèles de diffusion spécifiquement conçue pour
+limiter le sur-apprentissage lorsque le nombre de données disponibles est
+extrêmement réduit. Par ailleurs, d'un point de vue plus théorique, Chen et
+al.~\cite{chen2022sampling} montrent que les modèles de diffusion peuvent
+fournir des garanties d'échantillonnage sous des hypothèses relativement faibles
+sur l'estimation du score, apportant ainsi un éclairage important sur leur
+efficacité en termes de complexité en données. Enfin, les modèles de diffusion
+ont également été interprétés comme des \emph{priors} génératifs génériques
+pouvant être intégrés dans des cadres d'inférence plus larges, notamment pour
+des problèmes inverses, comme le montrent Graikos et
+al.~\cite{graikos2022plugandplay}, ouvrant la voie à des approches modulaires
+combinant pré-entraînement massif et adaptation à des tâches spécifiques.
+
+Ces travaux fournissent un cadre conceptuel solide pour étudier, dans le
+contexte de ce projet, la relation entre pré-entraînement génératif, taille des
+jeux de données cliniques disponibles et performances atteignables.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Objectif du stage}
 
 Ce stage vise à évaluer si un modèle génératif pré-entraîné peut apprendre la
@@ -145,7 +177,43 @@ arXiv:2508.05772, 2025.
 S. Chilamkurthy et al.,
 \emph{Deep learning algorithms for detection of critical findings in head CT scans: a retrospective study},
 The Lancet, 392(10162):2388--2396, 2018.
-DOI: 10.1016/S0140-6736(18)31645-3.
+
+% Références état de l'art modèles de diffusion
+
+\bibitem{pinaya2022brain}
+W.H.L. Pinaya, P.-D. Tudosiu, J. Dafflon, P.F. Da Costa, V. Fernandez, P. Nachev, S. Ourselin, M.J. Cardoso,
+\emph{Brain Imaging Generation with Latent Diffusion Models},
+MICCAI Workshop on Deep Generative Models, pp.~117--126, Springer, 2022.
+
+\bibitem{wolleb2022anomaly}
+J. Wolleb, F. Bieder, R. Sandkühler, P.C. Cattin,
+\emph{Diffusion Models for Medical Anomaly Detection},
+Medical Image Computing and Computer Assisted Intervention -- MICCAI 2022, pp.~35--45, Springer, 2022.
+
+\bibitem{khan2025survey}
+W. Khan, S. Leem, K.B. See, J.K. Wong, S. Zhang, R. Fang,
+\emph{A Comprehensive Survey of Foundation Models in Medicine},
+IEEE Reviews in Biomedical Engineering, 2025.
+
+\bibitem{cao2024fewshot}
+Y. Cao, S. Gong,
+\emph{Few-Shot Image Generation by Conditional Relaxing Diffusion Inversion},
+European Conference on Computer Vision (ECCV), pp.~20--37, Springer, 2024.
+
+\bibitem{hu2023phasic}
+T. Hu, J. Zhang, L. Liu, R. Yi, S. Kou, H. Zhu, X. Chen, Y. Wang, C. Wang, L. Ma,
+\emph{Phasic Content Fusing Diffusion Model with Directional Distribution Consistency for Few-Shot Model Adaption},
+IEEE/CVF International Conference on Computer Vision (ICCV), pp.~2406--2415, 2023.
+
+\bibitem{chen2022sampling}
+S. Chen, S. Chewi, J. Li, Y. Li, A. Salim, A.R. Zhang,
+\emph{Sampling is as Easy as Learning the Score: Theory for Diffusion Models with Minimal Data Assumptions},
+International Conference on Learning Representations (ICLR), 2023.
+
+\bibitem{graikos2022plugandplay}
+A. Graikos, N. Malkin, N. Jojic, D. Samaras,
+\emph{Diffusion Models as Plug-and-Play Priors},
+Advances in Neural Information Processing Systems (NeurIPS), 35:14715--14728, 2022.
 
 \end{thebibliography}
 
