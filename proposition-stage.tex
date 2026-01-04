@@ -50,9 +50,9 @@
 \section*{Contexte et motivation}
 
 Ce stage s'inscrit dans le projet \textbf{GenAIPI-TBI} (Generative AI for Predictive
-Imaging in Traumatic Brain Injury), mené au CHU de Grenoble, dont l'objectif est de développer des
-modèles de génération d'images permettant de prédire l'évolution des lésions hémorragiques au scanner
-chez des patients ayant subi un traumatisme crânien. Cette pathologie est la première cause de handicap 
+Imaging in Traumatic Brain Injury), mené au CHU de Grenoble. Son objectif à long terme est de développer des 
+modèles génératifs capables de \textbf{prédire l'évolution} des lésions hémorragiques à partir des scanners 
+antérieurs chez des patients ayant subi un traumatisme crânien. Cette pathologie est la première cause de handicap 
 chez les moins de 35 ans en Europe~\cite{maas2017tbi}, et sa prise en charge est guidée par l'évaluation
 régulière de l'évolution des lésions au scanner cérébral \cite{geeraerts2016sfar}. Disposer de modèles
 génératifs capables de simuler l'évolution des lésions à partir d'un scanner initial pourrait ainsi
@@ -61,7 +61,7 @@ constituer un outil précieux pour la planification thérapeutique.
 Les modèles de diffusion se sont imposés comme l'approche de référence pour la 
 génération d'images, tant en vision par ordinateur~\cite{croitoru2023tpami} qu'en 
 imagerie médicale~\cite{kazerouni2023media}. Un obstacle majeur à l'utilisation de ces modèles
-dans le projet GenAIPI-TBI est la \textbf{rareté des données} : le projet dispose d'environ
+dans le projet GenAIPI-TBI est la \textbf{rareté des données} : nous disposons en effet d'environ
 700 patients et 1\,600 scanners, soit un ordre de grandeur inférieur aux dizaines de
 milliers d'exemples typiquement requis par les modèles génératifs. A titre d'exemple,
 le modèle \textbf{MAISI} (Medical AI for Synthetic Imaging)~\cite{guo2024maisi}, 
@@ -77,8 +77,8 @@ BLAST-CT~\cite{monteiro2020blastct}, un outil de segmentation de lésions céré
 traumatiques, a été adapté avec seulement 87 scans par Brossard et
 al.~\cite{brossard2023til} pour affiner les classes d'hémorragies intra-crâniennes
 post-traumatiques.
-La question se pose de savoir si cette approche fonctionne également pour les
-\textbf{modèles génératifs de fondation}.
+La question se pose de savoir si une approche similaire fonctionne également pour les
+\textbf{modèles génératifs}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Objectif du stage}
@@ -96,6 +96,8 @@ donné ?} Cette question, analogue au calcul du nombre de sujets nécessaires da
 études cliniques, n'a pas de réponse établie dans le contexte des modèles génératifs
 pour l'imagerie médicale.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Etat de l'art}
 Plusieurs travaux ont montré que les modèles de diffusion pouvaient être 
 adaptés à des régimes de données restreints, en
 particulier dans des contextes de \emph{few-shot learning} ou de transfert
