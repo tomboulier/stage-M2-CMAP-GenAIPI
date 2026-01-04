@@ -56,7 +56,10 @@ régulière de l'évolution des lésions hémorragiques au scanner cérébral \c
 L'objectif à long terme est de développer des modèles génératifs capables de \textbf{prédire l'évolution}
 de ces lésions à partir des scanners antérieurs.
 
-Un obstacle majeur est la \textbf{rareté des données} : le projet dispose d'environ
+Les modèles de diffusion se sont imposés comme l'approche de référence pour la 
+génération d'images, tant en vision par ordinateur~\cite{croitoru2023tpami} qu'en 
+imagerie médicale~\cite{kazerouni2023media}. Un obstacle majeur à l'utilisation de ces modèles
+dans le projet GenAIPI-TBI est la \textbf{rareté des données} : le projet dispose d'environ
 700 patients et 1\,600 scanners, soit un ordre de grandeur inférieur aux dizaines de
 milliers d'exemples typiquement requis par les modèles génératifs. A titre d'exemple,
 le modèle \textbf{MAISI} (Medical AI for Synthetic Imaging)~\cite{guo2024maisi}, 
@@ -169,8 +172,6 @@ S. Chilamkurthy et al.,
 \emph{Deep learning algorithms for detection of critical findings in head CT scans: a retrospective study},
 The Lancet, 392(10162):2388--2396, 2018.
 
-% Références état de l'art modèles de diffusion
-
 \bibitem{pinaya2022brain}
 W.H.L. Pinaya, P.-D. Tudosiu, J. Dafflon, P.F. Da Costa, V. Fernandez, P. Nachev, S. Ourselin, M.J. Cardoso,
 \emph{Brain Imaging Generation with Latent Diffusion Models},
@@ -205,6 +206,17 @@ International Conference on Learning Representations (ICLR), 2023.
 A. Graikos, N. Malkin, N. Jojic, D. Samaras,
 \emph{Diffusion Models as Plug-and-Play Priors},
 Advances in Neural Information Processing Systems (NeurIPS), 35:14715--14728, 2022.
+
+\bibitem{croitoru2023tpami}
+F.A. Croitoru, V. Hondru, R.T. Ionescu, M. Shah,
+\emph{Diffusion Models in Vision: A Survey},
+IEEE Transactions on Pattern Analysis and Machine Intelligence, 45(9):10850--10869, 2023.
+
+\bibitem{kazerouni2023media}
+A. Kazerouni, E.K. Aghdam, M. Heidari, R. Azad, M. Fayyaz, I. Hacihaliloglu, D. Merhof,
+\emph{Diffusion Models in Medical Imaging: A Comprehensive Survey},
+Medical Image Analysis, 88:102846, 2023.
+
 
 \end{thebibliography}
 
