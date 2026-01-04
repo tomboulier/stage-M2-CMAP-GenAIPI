@@ -50,11 +50,13 @@
 \section*{Contexte et motivation}
 
 Ce stage s'inscrit dans le projet \textbf{GenAIPI-TBI} (Generative AI for Predictive
-Imaging in Traumatic Brain Injury), mené au CHU de Grenoble. Le traumatisme crânien est la première cause de handicap chez les moins
-de 35 ans en Europe~\cite{maas2017tbi}, et sa prise en charge est guidée par l'évaluation
-régulière de l'évolution des lésions hémorragiques au scanner cérébral \cite{geeraerts2016sfar}. 
-L'objectif à long terme est de développer des modèles génératifs capables de \textbf{prédire l'évolution}
-de ces lésions à partir des scanners antérieurs.
+Imaging in Traumatic Brain Injury), mené au CHU de Grenoble, dont l'objectif est de développer des
+modèles de génération d'images permettant de prédire l'évolution des lésions hémorragiques au scanner
+chez des patients ayant subi un traumatisme crânien. Cette pathologie est la première cause de handicap 
+chez les moins de 35 ans en Europe~\cite{maas2017tbi}, et sa prise en charge est guidée par l'évaluation
+régulière de l'évolution des lésions au scanner cérébral \cite{geeraerts2016sfar}. Disposer de modèles
+génératifs capables de simuler l'évolution des lésions à partir d'un scanner initial pourrait ainsi
+constituer un outil précieux pour la planification thérapeutique.
 
 Les modèles de diffusion se sont imposés comme l'approche de référence pour la 
 génération d'images, tant en vision par ordinateur~\cite{croitoru2023tpami} qu'en 
@@ -144,8 +146,25 @@ Geeraerts, Thomas, et al.
 \emph{Prise en charge des traumatisés crâniens graves à la phase précoce (24 premières heures).}
 Anesth Reanim (2.6:431-53), 2016.
 
-\bibitem{rgpd2016}
-Règlement (UE) 2016/679 du Parlement européen et du Conseil (RGPD), article 5 -- Principes relatifs au traitement des données à caractère personnel, 2016.
+\bibitem{croitoru2023tpami}
+F.A. Croitoru, V. Hondru, R.T. Ionescu, M. Shah,
+\emph{Diffusion Models in Vision: A Survey},
+IEEE Transactions on Pattern Analysis and Machine Intelligence, 45(9):10850--10869, 2023.
+
+\bibitem{kazerouni2023media}
+A. Kazerouni, E.K. Aghdam, M. Heidari, R. Azad, M. Fayyaz, I. Hacihaliloglu, D. Merhof,
+\emph{Diffusion Models in Medical Imaging: A Comprehensive Survey},
+Medical Image Analysis, 88:102846, 2023.
+
+\bibitem{guo2024maisi}
+P. Guo et al.,
+\emph{MAISI: Medical AI for Synthetic Imaging},
+arXiv:2409.11169, 2024.
+
+\bibitem{pinaya2022brain}
+W.H.L. Pinaya, P.-D. Tudosiu, J. Dafflon, P.F. Da Costa, V. Fernandez, P. Nachev, S. Ourselin, M.J. Cardoso,
+\emph{Brain Imaging Generation with Latent Diffusion Models},
+MICCAI Workshop on Deep Generative Models, pp.~117--126, Springer, 2022.
 
 \bibitem{monteiro2020blastct}
 M. Monteiro et al.,
@@ -157,35 +176,10 @@ C. Brossard et al.,
 \emph{Prediction of therapeutic intensity level from automatic multiclass segmentation of traumatic brain injury lesions on CT-scans},
 Scientific Reports, 13:19536, 2023.
 
-\bibitem{guo2024maisi}
-P. Guo et al.,
-\emph{MAISI: Medical AI for Synthetic Imaging},
-arXiv:2409.11169, 2024.
-
-\bibitem{zhao2025maisiv2}
-C. Zhao et al.,
-\emph{MAISI-v2: Accelerated 3D High-Resolution Medical Image Synthesis with Rectified Flow and Region-specific Contrastive Loss},
-arXiv:2508.05772, 2025.
-
 \bibitem{chilamkurthy2018cq500}
 S. Chilamkurthy et al.,
 \emph{Deep learning algorithms for detection of critical findings in head CT scans: a retrospective study},
 The Lancet, 392(10162):2388--2396, 2018.
-
-\bibitem{pinaya2022brain}
-W.H.L. Pinaya, P.-D. Tudosiu, J. Dafflon, P.F. Da Costa, V. Fernandez, P. Nachev, S. Ourselin, M.J. Cardoso,
-\emph{Brain Imaging Generation with Latent Diffusion Models},
-MICCAI Workshop on Deep Generative Models, pp.~117--126, Springer, 2022.
-
-\bibitem{wolleb2022anomaly}
-J. Wolleb, F. Bieder, R. Sandkühler, P.C. Cattin,
-\emph{Diffusion Models for Medical Anomaly Detection},
-Medical Image Computing and Computer Assisted Intervention -- MICCAI 2022, pp.~35--45, Springer, 2022.
-
-\bibitem{khan2025survey}
-W. Khan, S. Leem, K.B. See, J.K. Wong, S. Zhang, R. Fang,
-\emph{A Comprehensive Survey of Foundation Models in Medicine},
-IEEE Reviews in Biomedical Engineering, 2025.
 
 \bibitem{cao2024fewshot}
 Y. Cao, S. Gong,
@@ -206,17 +200,6 @@ International Conference on Learning Representations (ICLR), 2023.
 A. Graikos, N. Malkin, N. Jojic, D. Samaras,
 \emph{Diffusion Models as Plug-and-Play Priors},
 Advances in Neural Information Processing Systems (NeurIPS), 35:14715--14728, 2022.
-
-\bibitem{croitoru2023tpami}
-F.A. Croitoru, V. Hondru, R.T. Ionescu, M. Shah,
-\emph{Diffusion Models in Vision: A Survey},
-IEEE Transactions on Pattern Analysis and Machine Intelligence, 45(9):10850--10869, 2023.
-
-\bibitem{kazerouni2023media}
-A. Kazerouni, E.K. Aghdam, M. Heidari, R. Azad, M. Fayyaz, I. Hacihaliloglu, D. Merhof,
-\emph{Diffusion Models in Medical Imaging: A Comprehensive Survey},
-Medical Image Analysis, 88:102846, 2023.
-
 
 \end{thebibliography}
 
