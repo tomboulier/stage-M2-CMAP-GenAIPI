@@ -50,18 +50,18 @@
 \section*{Contexte et motivation}
 
 Ce stage s'inscrit dans le projet \textbf{GenAIPI-TBI} (Generative AI for Predictive
-Imaging in Traumatic Brain Injury), mené au CHU de Grenoble. L'objectif à long terme
-est de développer des modèles génératifs capables de \textbf{prédire l'évolution des
-lésions cérébrales} chez les patients traumatisés crâniens à partir d'images CT
-successives. Le traumatisme crânien est la première cause de handicap chez les moins
-de 35 ans en Europe~\cite{maas2017tbi}.
+Imaging in Traumatic Brain Injury), mené au CHU de Grenoble. Le traumatisme crânien est la première cause de handicap chez les moins
+de 35 ans en Europe~\cite{maas2017tbi}, et sa prise en charge est guidée par l'évaluation
+régulière de l'évolution des lésions hémorragiques au scanner cérébral \cite{geeraerts2016sfar}. 
+L'objectif à long terme est de développer des modèles génératifs capables de \textbf{prédire l'évolution}
+de ces lésions à partir des scanners antérieurs.
 
 Un obstacle majeur est la \textbf{rareté des données} : le projet dispose d'environ
 700 patients et 1\,600 scanners, soit un ordre de grandeur inférieur aux dizaines de
-milliers d'exemples typiquement requis par les modèles génératifs. Cette contrainte
-est renforcée par le \textbf{principe de minimisation} du RGPD
-(article 5)~\cite{rgpd2016}, qui impose de limiter la collecte de données
-personnelles au strict nécessaire.
+milliers d'exemples typiquement requis par les modèles génératifs. A titre d'exemple,
+le modèle \textbf{MAISI} (Medical AI for Synthetic Imaging)~\cite{guo2024maisi}, 
+développé par NVIDIA, a été pré-entraîné sur environ 39\,000 volumes de scanners ;
+celui de Pinaya et al.~\cite{pinaya2022brain} sur 31\,740 IRM cérébrales.
 
 \textbf{La question fondamentale est donc : peut-on entraîner des modèles génératifs
 de qualité avec peu de données ?}
@@ -76,13 +76,22 @@ La question se pose de savoir si cette approche fonctionne également pour les
 \textbf{modèles génératifs de fondation}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section*{État de l'art}
+\section*{Objectif du stage}
 
-Les modèles de diffusion ont récemment émergé comme une classe particulièrement
-performante de modèles génératifs, notamment en imagerie
-médicale~\cite{pinaya2022brain,wolleb2022anomaly,khan2025survey}, où ils
-permettent de capturer des distributions de données complexes à haute dimension
-malgré des volumes d'apprentissage limités. Plusieurs travaux ont montré que ces
+Ce stage vise à évaluer si un modèle génératif pré-entraîné peut apprendre la
+distribution d'un jeu de données de scanners cérébraux avec un nombre limité
+d'exemples.
+
+L'étude s'appuiera sur le jeu de données public
+\textbf{CQ-500}~\cite{chilamkurthy2018cq500} (491 scanners cérébraux, dont 205 avec
+hémorragies intracrâniennes) pour aborder la question suivante : \textbf{quel est le
+nombre minimal d'images d'entraînement nécessaire pour qu'un modèle génératif
+pré-entraîné produise, après adaptation, des images atteignant un seuil de qualité
+donné ?} Cette question, analogue au calcul du nombre de sujets nécessaires dans les
+études cliniques, n'a pas de réponse établie dans le contexte des modèles génératifs
+pour l'imagerie médicale.
+
+Plusieurs travaux ont montré que ces
 modèles pouvaient être adaptés à des régimes de données restreints, en
 particulier dans des contextes de \emph{few-shot learning} ou de transfert
 depuis un pré-entraînement à grande échelle. Cao et Gong~\cite{cao2024fewshot}
@@ -108,29 +117,6 @@ contexte de ce projet, la relation entre pré-entraînement génératif, taille 
 jeux de données cliniques disponibles et performances atteignables.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section*{Objectif du stage}
-
-Ce stage vise à évaluer si un modèle génératif pré-entraîné peut apprendre la
-distribution d'un jeu de données de scanners cérébraux avec un nombre limité
-d'exemples.
-
-Le modèle étudié sera \textbf{MAISI} (Medical AI for Synthetic
-Imaging)~\cite{guo2024maisi}, développé par NVIDIA. MAISI est un modèle de diffusion
-latente capable de générer des images CT 3D haute résolution (jusqu'à
-$512 \times 512 \times 768$ voxels), pré-entraîné sur environ 39\,000 volumes. Une
-version améliorée, MAISI-v2~\cite{zhao2025maisiv2}, propose une accélération d'un
-facteur 10 à 33 grâce au \emph{rectified flow}.
-
-L'étude s'appuiera sur le modèle MAISI et le dataset
-\textbf{CQ-500}~\cite{chilamkurthy2018cq500} (491 scanners cérébraux, dont 205 avec
-hémorragies intracrâniennes) pour aborder la question suivante : \textbf{quel est le
-nombre minimal d'images d'entraînement nécessaire pour qu'un modèle génératif
-pré-entraîné produise, après adaptation, des images atteignant un seuil de qualité
-donné ?} Cette question, analogue au calcul du nombre de sujets nécessaires dans les
-études cliniques, n'a pas de réponse établie dans le contexte des modèles génératifs
-pour l'imagerie médicale.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Profil recherché}
 
 \begin{itemize}
@@ -149,6 +135,11 @@ pour l'imagerie médicale.
 A.I.R. Maas et al.,
 \emph{Traumatic brain injury: integrated approaches to improve prevention, clinical care, and research},
 The Lancet Neurology, 16(12):987--1048, 2017.
+
+\bibitem{geeraerts2016sfar}
+Geeraerts, Thomas, et al. 
+\emph{Prise en charge des traumatisés crâniens graves à la phase précoce (24 premières heures).}
+Anesth Reanim (2.6:431-53), 2016.
 
 \bibitem{rgpd2016}
 Règlement (UE) 2016/679 du Parlement européen et du Conseil (RGPD), article 5 -- Principes relatifs au traitement des données à caractère personnel, 2016.
