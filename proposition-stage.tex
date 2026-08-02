@@ -1,23 +1,38 @@
 \documentclass[11pt,a4paper]{article}
 
-% Encodage et langue
+% Encodage
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-% Décommenter après 'make install' :
-% \usepackage[french]{babel}
-\usepackage{csquotes}
 
 % Mise en page
 \usepackage[margin=2.5cm]{geometry}
 
 % Typographie
 \usepackage{lmodern}
+\usepackage{microtype}
 
 % Liens
 \usepackage[colorlinks=true,linkcolor=blue!60!black,citecolor=blue!60!black,urlcolor=blue!60!black]{hyperref}
+\hypersetup{
+    pdftitle={Apprentissage de modèles génératifs d'images médicales 3D avec peu de données},
+    pdfauthor={Josselin Garnier, Thomas Boulier},
+    pdfsubject={Proposition de stage de Master 2 -- CMAP, École Polytechnique},
+    pdfkeywords={modèles de diffusion, imagerie médicale, few-shot learning, traumatisme crânien}
+}
 
-% Bibliographie
+% Bibliographie (natbib doit être chargé AVANT babel-french)
 \usepackage[numbers,sort&compress]{natbib}
+
+% Langue : babel-french n'est chargé que s'il est disponible (cf. 'make install'),
+% afin que le document compile aussi sur une installation TeX minimale.
+\IfFileExists{french.ldf}{%
+  \usepackage[french]{babel}%
+}{%
+  \PackageWarningNoLine{proposition-stage}{%
+    babel-french introuvable : la typographie francaise est desactivee.
+    Lancez 'make install' pour installer texlive-lang-french}%
+}
+\usepackage{csquotes}
 
 % Couleurs
 \usepackage{xcolor}
@@ -63,7 +78,7 @@ génération d'images, tant en vision par ordinateur~\cite{croitoru2023tpami} qu
 imagerie médicale~\cite{kazerouni2023media}. Un obstacle majeur à l'utilisation de ces modèles
 dans le projet GenAIPI-TBI est la \textbf{rareté des données} : nous disposons en effet d'environ
 700 patients et 1\,600 scanners, soit un ordre de grandeur inférieur aux dizaines de
-milliers d'exemples typiquement requis par les modèles génératifs. A titre d'exemple,
+milliers d'exemples typiquement requis par les modèles génératifs. À titre d'exemple,
 le modèle \textbf{MAISI} (Medical AI for Synthetic Imaging)~\cite{guo2024maisi}, 
 développé par NVIDIA, a été pré-entraîné sur environ 39\,000 volumes de scanners ;
 celui de Pinaya et al.~\cite{pinaya2022brain} sur 31\,740 IRM cérébrales.
@@ -97,7 +112,7 @@ donné ?} Cette question, analogue au calcul du nombre de sujets nécessaires da
 pour l'imagerie médicale.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section*{Etat de l'art}
+\section*{État de l'art}
 Plusieurs travaux ont montré que les modèles de diffusion pouvaient être 
 adaptés à des régimes de données restreints, en
 particulier dans des contextes de \emph{few-shot learning} ou de transfert
@@ -129,14 +144,13 @@ jeux de données cliniques disponibles et performances atteignables.
 \begin{itemize}
     \item Master 2 en mathématiques appliquées, informatique ou domaine connexe
     \item Connaissances en apprentissage profond et modèles génératifs
-    \item Compétences en programmation Python, Expérience avec PyTorch et/ou TensorFlow
+    \item Compétences en programmation Python ; expérience avec PyTorch et/ou TensorFlow
     \item Intérêt pour l'imagerie médicale
 \end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \renewcommand{\refname}{Références}
-\bibliographystyle{unsrtnat}
-\begin{thebibliography}{9}
+\begin{thebibliography}{99}
 
 \bibitem{maas2017tbi}
 A.I.R. Maas et al.,
@@ -144,9 +158,9 @@ A.I.R. Maas et al.,
 The Lancet Neurology, 16(12):987--1048, 2017.
 
 \bibitem{geeraerts2016sfar}
-Geeraerts, Thomas, et al. 
-\emph{Prise en charge des traumatisés crâniens graves à la phase précoce (24 premières heures).}
-Anesth Reanim (2.6:431-53), 2016.
+T. Geeraerts et al.,
+\emph{Prise en charge des traumatisés crâniens graves à la phase précoce (24 premières heures)},
+Anesthésie \& Réanimation, 2(6):431--453, 2016.
 
 \bibitem{croitoru2023tpami}
 F.A. Croitoru, V. Hondru, R.T. Ionescu, M. Shah,
