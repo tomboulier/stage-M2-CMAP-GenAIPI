@@ -156,7 +156,11 @@ def train(
         lr = cfg.lr * min(1.0, (step + 1) / max(cfg.warmup, 1))
         for g in opt.param_groups:
             g["lr"] = lr
-        idx = torch.randint(0, n, (min(cfg.batch_size, max(n, 1)),), generator=gen)
+        # Tirage AVEC remise, à taille de lot constante même lorsque n < batch_size.
+        # Réduire le lot à n pour les petits n changerait simultanément la
+        # quantité de données, le coût par pas et le niveau de bruit du
+        # gradient : la courbe ne mesurerait plus l'effet de n seul.
+        idx = torch.randint(0, n, (cfg.batch_size,), generator=gen)
         x0 = data[idx].clone()
         if cfg.p_flip > 0:
             flip = torch.rand(x0.shape[0], generator=gen) < cfg.p_flip

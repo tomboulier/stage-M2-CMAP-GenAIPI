@@ -75,9 +75,15 @@ def fit_power_law(
     """
     n = np.asarray(n, dtype=float)
     q = np.asarray(q, dtype=float)
-    if np.any(q <= 0):
-        shift = 1e-12
-        q = np.maximum(q, shift)
+    # L'estimateur sans biais de la MMD^2 peut être légèrement négatif lorsque
+    # le modèle est proche du plancher réel/réel : c'est le prix à payer pour
+    # l'absence de biais. On remplace ces valeurs par la moitié de la plus
+    # petite valeur positive observée plutôt que par un epsilon arbitraire,
+    # qui écraserait l'ajustement logarithmique.
+    pos = q[q > 0]
+    if pos.size == 0:
+        raise ValueError("aucune valeur positive : loi d'échelle non identifiable")
+    q = np.where(q > 0, q, 0.5 * pos.min())
     log_q = np.log(q)
 
     def residuals(theta):
