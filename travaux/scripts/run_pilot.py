@@ -87,9 +87,52 @@ def load_prepared(cfg: ExperimentConfig) -> tuple[Fixtures, str]:
     return fx, meta["pretrained_path"]
 
 
+def zero_shot(cfg: ExperimentConfig, fx: Fixtures, pretrained_path: str) -> list[dict]:
+    """Évalue le modèle pré-entraîné tel quel, sans adaptation.
+
+    L'audit de mémorisation est calibré contre un sous-échantillon du vivier :
+    à n = 0 il n'y a pas de jeu d'entraînement, mais la mesure reste définie et
+    doit valoir ~1 (le modèle n'a jamais vu ces images).
+    """
+    import numpy as np
+    import torch as _torch
+
+    from fewshotgen.ddpm import Diffusion
+    from fewshotgen.metrics import evaluate
+    from fewshotgen.pipeline import make_model, subsample
+
+    model = make_model(cfg)
+    model.load_state_dict(_torch.load(pretrained_path, map_location="cpu"))
+    diff = Diffusion(cfg.diffusion_T)
+
+    out = []
+    for seed in cfg.seeds:
+        gen = _torch.Generator().manual_seed(777_000 + seed)
+        fake = diff.ddim_sample(
+            model, cfg.n_gen, (1, cfg.size, cfg.size),
+            n_steps=cfg.ddim_steps, generator=gen,
+        ).numpy()
+        ref_train = subsample(fx.pool, 64, seed=90000 + 97 * seed)
+        ev = evaluate(
+            fake_images=fake, real_ref_images=fx.ref, train_images=ref_train,
+            holdout_images=fx.holdout, feat_net=fx.feat_net, bandwidth=fx.bandwidth,
+        )
+        os.makedirs(os.path.join(cfg.out_dir, "samples"), exist_ok=True)
+        np.save(os.path.join(cfg.out_dir, "samples", f"zero-shot_n0_s{seed}.npy"),
+                fake[:16].astype(np.float16))
+        rec = {"n": 0, "seed": seed, "arm": "zero-shot", "seconds": 0.0}
+        rec.update(ev.as_dict())
+        print(f"[zero-shot] seed={seed} mmd2={rec['mmd2']:.3e} "
+              f"cov={rec['coverage']:.2f} w1={rec['w1_mean']:.2f}", flush=True)
+        out.append(rec)
+    return out
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--prepare", action="store_true")
+    ap.add_argument("--zero-shot", action="store_true",
+                    help="évalue le modèle pré-entraîné sans aucune adaptation (n = 0)")
     ap.add_argument("--shard", type=int, default=0)
     ap.add_argument("--n-shards", type=int, default=1)
     ap.add_argument("--threads", type=int, default=1)
@@ -106,6 +149,15 @@ def main() -> None:
         return
 
     fx, pretrained_path = load_prepared(cfg)
+
+    if args.zero_shot:
+        # Contrôle n = 0 : quelle part de la distribution cible le
+        # pré-entraînement couvre-t-il déjà, avant toute adaptation ? Sans ce
+        # point, on ne sait pas ce que la courbe mesure réellement.
+        for rec in zero_shot(cfg, fx, pretrained_path):
+            append_jsonl(RUNS_JSONL, rec)
+        return
+
     runs = plan_runs(cfg)[args.shard :: args.n_shards]
     done = {(r["n"], r["seed"], r["arm"]) for r in load_jsonl(RUNS_JSONL)}
     todo = [r for r in runs if r not in done]

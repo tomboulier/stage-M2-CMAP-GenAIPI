@@ -50,9 +50,20 @@ def _mean_sd(d: dict[int, list[float]], ns: list[int]):
     return m, s
 
 
+def zero_shot_value(records, key="mmd2"):
+    """Valeur du contrôle n = 0 (modèle pré-entraîné sans adaptation)."""
+    vals = [float(r[key]) for r in records if r["arm"] == "zero-shot"]
+    return float(np.mean(vals)) if vals else None
+
+
 def fig_learning_curves(records, arms, tau, outfile):
     fig, ax = plt.subplots(figsize=(7.2, 5.0))
     fits = {}
+    zs = zero_shot_value(records)
+    if zs is not None:
+        ax.axhline(zs, color="#7f7f7f", lw=1.4, ls="--")
+        ax.text(0.02, 0.965, "$n=0$ : pré-entraîné sans adaptation",
+                transform=ax.transAxes, fontsize=9, color="#4d4d4d", va="top")
     for arm in arms:
         d = group(records, arm, "mmd2")
         if not d:
@@ -99,6 +110,9 @@ def fig_panels(records, arms, outfile):
     ]
     fig, axes = plt.subplots(2, 3, figsize=(12.5, 6.8))
     for ax, (key, label, higher_better) in zip(axes.ravel(), keys):
+        zs = zero_shot_value(records, key)
+        if zs is not None:
+            ax.axhline(zs, color="#7f7f7f", lw=1.2, ls="--", label="$n=0$")
         for arm in arms:
             d = group(records, arm, key)
             if not d:
@@ -145,9 +159,12 @@ def fig_quality_vs_novelty(records, arms, outfile):
 def fig_samples(cfg, arms, outfile, ns=(8, 32, 256), seed=0):
     from fewshotgen.phantom import sample_dataset
 
-    rows = [("réel (cible)", None, None)] + [
-        (f"{ARM_LABEL[a]}, n={n}", a, n) for a in arms for n in ns
-    ]
+    rows = (
+        [("réel (cible)", None, None)]
+        + ([("pré-entraîné, n=0", "zero-shot", 0)]
+           if os.path.exists("results/samples/zero-shot_n0_s0.npy") else [])
+        + [(f"{ARM_LABEL[a]}, n={n}", a, n) for a in arms for n in ns]
+    )
     fig, axes = plt.subplots(len(rows), 8, figsize=(8.6, 1.12 * len(rows)))
     real, _ = sample_dataset(8, "target", cfg.size, seed=99)
     for r, (label, arm, n) in enumerate(rows):
@@ -160,14 +177,19 @@ def fig_samples(cfg, arms, outfile, ns=(8, 32, 256), seed=0):
             ax = axes[r, c]
             ax.axis("off")
             if imgs is not None and c < len(imgs):
-                ax.imshow(imgs[c], cmap="gray", vmin=-1, vmax=1, interpolation="nearest")
+                # Fenêtre d'affichage resserrée autour de la densité du sang
+                # aigu (analogue d'une fenêtre AVC) : dans la fenêtre
+                # parenchymateuse large, une hémorragie fraîche est peu
+                # contrastée et l'inspection visuelle est trompeuse.
+                ax.imshow(imgs[c], cmap="gray", vmin=-0.25, vmax=0.55,
+                          interpolation="nearest")
         axes[r, 0].set_ylabel(label, fontsize=7)
         axes[r, 0].axis("on")
         axes[r, 0].set_xticks([])
         axes[r, 0].set_yticks([])
         for spine in axes[r, 0].spines.values():
             spine.set_visible(False)
-    fig.suptitle("Échantillons (fenêtre parenchymateuse)", fontsize=11)
+    fig.suptitle("Échantillons (fenêtre d'affichage resserrée sur le sang aigu)", fontsize=11)
     fig.tight_layout()
     fig.savefig(outfile, dpi=150)
     plt.close(fig)

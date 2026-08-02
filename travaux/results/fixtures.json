@@ -1,0 +1,59 @@
+{
+  "config": {
+    "size": 32,
+    "base": 24,
+    "mults": [
+      1,
+      2,
+      2
+    ],
+    "diffusion_T": 1000,
+    "n_source": 20000,
+    "pretrain_steps": 5000,
+    "pretrain_batch": 64,
+    "pretrain_lr": 0.0002,
+    "finetune_steps": 900,
+    "finetune_batch": 32,
+    "finetune_lr": 0.0003,
+    "n_gen": 384,
+    "ddim_steps": 30,
+    "n_ref": 1024,
+    "n_holdout": 512,
+    "n_pool": 2048,
+    "n_null": 4096,
+    "n_values": [
+      4,
+      8,
+      16,
+      32,
+      64,
+      128,
+      256
+    ],
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "arms": [
+      "pretrained",
+      "scratch",
+      "pretrained_aug"
+    ],
+    "seed_source": 1000,
+    "seed_pool": 2000,
+    "seed_ref": 3000,
+    "seed_holdout": 4000,
+    "seed_null": 5000,
+    "out_dir": "results",
+    "cache_dir": "results/cache"
+  },
+  "bandwidth": 7.193319666114057,
+  "tau_null": {
+    "tau_95": 0.001696180158592092,
+    "tau_99": 0.0029984181107380057,
+    "null_mean": -5.6718229535849815e-05,
+    "null_sd": 0.0008724184452987364
+  },
+  "pretrained_path": "results/cache/pretrained-s32-b24-n20000-t5000.pt"
+}
