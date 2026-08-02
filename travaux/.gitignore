@@ -1,0 +1,7 @@
+# Points de contrôle et caches : régénérables par `scripts/run_pilot.py --prepare`
+results/cache/
+results/samples/
+results/*.log
+__pycache__/
+*.pyc
+.pytest_cache/
