@@ -81,7 +81,7 @@ class TestUNet:
         x = torch.randn(2, 1, 16, 16)
         y1 = net(x, torch.tensor([1, 1]))
         y2 = net(x, torch.tensor([900, 900]))
-        assert float((y1 - y2).abs().mean()) > 1e-4
+        assert float((y1 - y2).abs().mean().detach()) > 1e-4
 
 
 class TestTrainingReducesLoss:

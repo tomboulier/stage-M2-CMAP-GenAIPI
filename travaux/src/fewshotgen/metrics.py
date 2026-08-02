@@ -88,7 +88,13 @@ def frechet_distance(X: np.ndarray, Y: np.ndarray) -> float:
     """Distance de Fréchet entre les approximations gaussiennes (la « FID »)."""
     mu1, mu2 = X.mean(0), Y.mean(0)
     s1, s2 = np.cov(X, rowvar=False), np.cov(Y, rowvar=False)
-    covmean, _ = linalg.sqrtm(s1 @ s2, disp=False)
+    # `disp` est déprécié depuis SciPy 1.18 : on s'adapte aux deux API.
+    try:
+        covmean = linalg.sqrtm(s1 @ s2)
+    except TypeError:  # pragma: no cover - anciennes versions de SciPy
+        covmean, _ = linalg.sqrtm(s1 @ s2, disp=False)
+    if isinstance(covmean, tuple):
+        covmean = covmean[0]
     if np.iscomplexobj(covmean):
         covmean = covmean.real
     return float(((mu1 - mu2) ** 2).sum() + np.trace(s1 + s2 - 2 * covmean))
